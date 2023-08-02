@@ -14,6 +14,9 @@ if ! command -v docker &>/dev/null; then
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+    newgrp docker
 fi
 
 # Login to Docker
@@ -60,7 +63,7 @@ cd ~/onlicorp
 # Clone/Update repos
 services=(user-tray appliance-tray security-tray proof-engine vault-oracle oracle convey logistics onli-cloud-tray transfer-agent treasury bill-breaker cloud-vault-tray)
 for service in "${services[@]}"; do
-    echo starting $service
+    echo Cloning $service
     if [ -d $service ]; then
         cd $service
         git pull
