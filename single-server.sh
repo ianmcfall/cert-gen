@@ -50,7 +50,7 @@ if ! command -v go &>/dev/null; then
         echo "Git configuration set to the desired value."
     fi
     export GOPRIVATE="github.com/onlicorp/*"
-    go install github.com/onlicorp/dev-tools/creds
+    go install github.com/onlicorp/dev-tools/creds@latest
 fi
 
 echo Stopping docker containers
