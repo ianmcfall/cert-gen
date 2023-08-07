@@ -34,23 +34,24 @@ echo Please add this ssh public key to github
 echo "Press Enter to continue..."
 read
 
-# if ! command -v go &>/dev/null; then 
-#     wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
-#     rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
-#     rm go1.20.6.linux-amd64.tar.gz
-#     echo "export PATH=$PATH:/usr/local/go/bin" >> $HOME/.profile
-#     source $HOME/.profile
+if ! command -v go &>/dev/null; then 
+    wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
+    rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
+    rm go1.20.6.linux-amd64.tar.gz
+    echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.profile
+    source $HOME/.profile
 
-#     desired_config="https://github.com/"
+    desired_config="https://github.com/"
 
-#     # set gitconfig
-#     current_config=$(git config --global --get url.git@github.com:.insteadOf)
-#     if ! [ "$current_config" == "$desired_config" ]; then
-#         git config --global url.git@github.com:.insteadOf "https://github.com/"
-#         echo "Git configuration set to the desired value."
-#     fi
-#     export GOPRIVATE="github.com/onlicorp/*"
-# fi
+    # set gitconfig
+    current_config=$(git config --global --get url.git@github.com:.insteadOf)
+    if ! [ "$current_config" == "$desired_config" ]; then
+        git config --global url.git@github.com:.insteadOf "https://github.com/"
+        echo "Git configuration set to the desired value."
+    fi
+    export GOPRIVATE="github.com/onlicorp/*"
+    go install github.com/onlicorp/dev-tools/creds
+fi
 
 echo Stopping docker containers
 docker stop $(docker ps -q)
