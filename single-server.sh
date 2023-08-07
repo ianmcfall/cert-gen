@@ -49,7 +49,7 @@ if ! command -v go &>/dev/null; then
         git config --global url.git@github.com:.insteadOf "https://github.com/"
         echo "Git configuration set to the desired value."
     fi
-    export GOPRIVATE="github.com/onlicorp/*"
+    export GOPRIVATE="github.com"
     go install github.com/onlicorp/dev-tools/creds@latest
 fi
 
