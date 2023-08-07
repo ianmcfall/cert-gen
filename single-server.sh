@@ -130,6 +130,7 @@ byobu send-keys -t os:9 "docker compose up -d" Enter
 byobu new-window -t os:10 -n "tr"
 byobu send-keys -t os:10 "cd treasury" Enter
 byobu send-keys -t os:10 "docker compose pull" Enter
+byobu send-keys -t os:10 "sleep 10" Enter # wait for oracle to start
 byobu send-keys -t os:10 "docker compose up -d" Enter
 # bill-breaker
 byobu new-window -t os:11 -n "bb"
