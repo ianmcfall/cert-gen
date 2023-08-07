@@ -26,7 +26,7 @@ if ! [[ -n "$docker_login" ]]; then
 fi
 
 # Add SSH key to github
-if ! [[ -f "$HOME/.ssh/id_rsa" ]]; then
+if ! [[ -f "~/.ssh/id_rsa" ]]; then
     ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa
 fi
 cat ~/.ssh/id_rsa.pub
@@ -38,8 +38,8 @@ if ! command -v go &>/dev/null; then
     wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
     sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
     rm go1.20.6.linux-amd64.tar.gz
-    echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.profile
-    source $HOME/.profile
+    echo "export PATH=$PATH:/usr/local/go/bin:~/go/bin" >> ~/.bashrc
+    source ~/.bashrc
 
     desired_config="https://github.com/"
 
