@@ -26,10 +26,10 @@ if ! [[ -n "$docker_login" ]]; then
 fi
 
 # Add SSH key to github
-if ! [[ -f "~/.ssh/id_rsa" ]]; then
-    ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa
+if ! [[ -f "$HOME/.ssh/id_rsa" ]]; then
+    ssh-keygen -q -t rsa -N "" -f $HOME/.ssh/id_rsa
 fi
-cat ~/.ssh/id_rsa.pub
+cat $HOME/.ssh/id_rsa.pub
 echo Please add this ssh public key to github
 echo "Press Enter to continue..."
 read
@@ -38,8 +38,8 @@ if ! command -v go &>/dev/null; then
     wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
     sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
     rm go1.20.6.linux-amd64.tar.gz
-    echo "export PATH=$PATH:/usr/local/go/bin:~/go/bin" >> ~/.bashrc
-    source ~/.bashrc
+    echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.bashrc
+    source $HOME/.bashrc
 
     desired_config="https://github.com/"
 
@@ -59,7 +59,7 @@ docker rm $(docker ps -aq)
 docker network create deployment
 cd 
 mkdir -p onlicorp
-cd ~/onlicorp
+cd $HOME/onlicorp
 
 # Clone/Update repos
 services=(user-tray appliance-tray security-tray proof-engine vault-oracle oracle convey logistics onli-cloud-tray transfer-agent treasury bill-breaker cloud-vault-tray)
@@ -72,7 +72,7 @@ for service in "${services[@]}"; do
         git clone --quiet --depth 1 git@github.com:onlicorp/$service.git
         cd $service
     fi
-    cd ~/onlicorp
+    cd $HOME/onlicorp
 done
 
 # Start byobu session
