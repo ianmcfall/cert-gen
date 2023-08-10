@@ -4,7 +4,7 @@
 if ! command -v docker &>/dev/null; then
     echo Installing Docker
     sudo apt-get update
-    sudo apt-get install ca-certificates curl wget gnupg byobu git -y
+    sudo apt-get install ca-certificates curl wget gnupg byobu git make -y
     sudo install -m 0755 -d /etc/apt/keyrings
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     sudo chmod a+r /etc/apt/keyrings/docker.gpg
