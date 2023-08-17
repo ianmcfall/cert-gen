@@ -115,34 +115,34 @@ byobu send-keys -t os:6 "docker compose up -d" Enter
 # logistics
 byobu new-window -t os:7 -n "logstc"
 byobu send-keys -t os:7 "cd logistics" Enter
-byobu send-keys -t os:7 "docker compose pull" Enter
-byobu send-keys -t os:7 "docker compose up -d" Enter
+byobu send-keys -t os:7 "docker compose -f docker-compose-multi-server.yml pull" Enter
+byobu send-keys -t os:7 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 # onli-cloud-tray
 byobu new-window -t os:8 -n "oct"
 byobu send-keys -t os:8 "cd onli-cloud-tray" Enter
-byobu send-keys -t os:8 "docker compose pull" Enter
-byobu send-keys -t os:8 "docker compose up -d" Enter
+byobu send-keys -t os:8 "docker compose -f docker-compose-multi-server.yml pull" Enter
+byobu send-keys -t os:8 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 # transfer-agent
 byobu new-window -t os:9 -n "ta"
 byobu send-keys -t os:9 "cd transfer-agent" Enter
-byobu send-keys -t os:9 "docker compose pull" Enter
-byobu send-keys -t os:9 "docker compose up -d" Enter
+byobu send-keys -t os:9 "docker compose -f docker-compose-multi-server.yml pull" Enter
+byobu send-keys -t os:9 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 # treasury
 byobu new-window -t os:10 -n "tr"
 byobu send-keys -t os:10 "cd treasury" Enter
-byobu send-keys -t os:10 "docker compose pull" Enter
+byobu send-keys -t os:10 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:10 "sleep 10" Enter # wait for oracle to start
-byobu send-keys -t os:10 "docker compose up -d" Enter
+byobu send-keys -t os:10 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 # bill-breaker
 byobu new-window -t os:11 -n "bb"
 byobu send-keys -t os:11 "cd bill-breaker" Enter
-byobu send-keys -t os:11 "docker compose pull" Enter
+byobu send-keys -t os:11 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:11 "sleep 60" Enter # wait for treasury to start
-byobu send-keys -t os:11 "docker compose up -d" Enter
+byobu send-keys -t os:11 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 # cloud-vault-tray
 byobu new-window -t os:12 -n "cvt"
 byobu send-keys -t os:12 "cd cloud-vault-tray" Enter
-byobu send-keys -t os:12 "docker compose pull" Enter
-byobu send-keys -t os:12 "docker compose up -d" Enter
+byobu send-keys -t os:12 "docker compose -f docker-compose-multi-server.yml pull" Enter
+byobu send-keys -t os:12 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 
 byobu attach-session -t os
