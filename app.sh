@@ -50,7 +50,7 @@ if ! command -v go &>/dev/null; then
         echo "Git configuration set to the desired value."
     fi
     export GOPRIVATE="github.com"
-    go install github.com/onlicorp/dev-tools/creds@latest
+    /usr/local/go/bin/go install github.com/onlicorp/dev-tools/creds@latest
 fi
 
 echo Stopping docker containers
@@ -84,6 +84,7 @@ OracleAddr="100.114.48.132:8088"
 SecurityTrayAddr="100.114.48.132:8091"
 UserTrayAddr="100.114.48.132:8092"
 RabbitMQAddr="amqp://guest:guest@100.114.48.132:5672/"' > .env
+
     cd $HOME/onlicorp
 done
 
