@@ -62,7 +62,7 @@ mkdir -p onlicorp
 cd $HOME/onlicorp
 
 # Clone/Update repos
-services=(logistics onli-cloud-tray transfer-agent treasury bill-breaker cloud-vault-tray)
+services=(logistics onli-cloud-tray transfer-agent treasury bill-breaker oracle)
 for service in "${services[@]}"; do
     echo Cloning $service
     if [ -d $service ]; then
@@ -78,9 +78,9 @@ TransferAgentAddr="transfer-agent-transfer-agent-1:8085"
 BillBreakerClientAddr="bill-breaker-bill-breaker-1:8084"
 OnliCloudAddr="onli-cloud-tray-onli-cloud-tray-1:8086"
 TreasuryAddr="treasury-treasury-1:8087"
+OracleAddr="genome-oracle:8088"
 
 VaultOracleClientAddr="100.114.48.132:8082"
-OracleAddr="100.114.48.132:8088"
 SecurityTrayAddr="100.114.48.132:8091"
 UserTrayAddr="100.114.48.132:8092"
 RabbitMQAddr="amqp://guest:guest@100.114.48.132:5672/"' > .env
@@ -123,11 +123,11 @@ byobu send-keys -t os:4 "docker compose -f docker-compose-multi-server.yml pull"
 byobu send-keys -t os:4 "sleep 60" Enter # wait for treasury to start
 byobu send-keys -t os:4 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 byobu send-keys -t os:4 "docker logs bill-breaker-bill-breaker-1 -f" Enter
-# cloud-vault-tray
-byobu new-window -t os:5 -n "cvt"
-byobu send-keys -t os:5 "cd cloud-vault-tray" Enter
-byobu send-keys -t os:5 "docker compose -f docker-compose-multi-server.yml pull" Enter
-byobu send-keys -t os:5 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:5 "docker logs cloud-vault-tray-cloud-vault-tray-1 -f" Enter
+# genome-oracle
+byobu new-window -t os:5 -n "oracle"
+byobu send-keys -t os:5 "cd oracle" Enter
+byobu send-keys -t os:5 "docker compose pull" Enter
+byobu send-keys -t os:5 "docker compose up -d" Enter
+byobu send-keys -t os:5 "docker logs genome-oracle -f" Enter
 
 byobu attach-session -t os
