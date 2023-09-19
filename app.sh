@@ -93,7 +93,7 @@ byobu new-session -d -s os
 # logistics
 byobu rename-window "logstc"
 byobu send-keys -t os:0 "cd logistics" Enter
-byobu send-keys -t os:0 "sed -i 's/vault_oracle_db/100.114.48.132/' docker-compose-multi-server.yml"
+byobu send-keys -t os:0 "sed -i 's/vault_oracle_db/100.114.48.132/' docker-compose-multi-server.yml" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 byobu send-keys -t os:0 "docker logs logistics-logistics-1 -f" Enter
