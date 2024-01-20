@@ -1,4 +1,10 @@
 #!/bin/bash
+APP_SYMBOL="$1"
+if [[ -z "$APP_SYMBOL" ]]; then
+    echo "Error: \$1 APP_SYMBOL is required"
+    exit 1
+fi
+echo "Setting up app $APP_SYMBOL"
 
 # Install Docker
 if ! command -v docker &>/dev/null; then
@@ -34,25 +40,6 @@ echo Please add this ssh public key to github
 echo "Press Enter to continue..."
 read
 
-if ! command -v go &>/dev/null; then 
-    wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
-    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
-    rm go1.20.6.linux-amd64.tar.gz
-    echo "export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin" >> $HOME/.bashrc
-    source $HOME/.bashrc
-
-    desired_config="https://github.com/"
-
-    # set gitconfig
-    current_config=$(git config --global --get url.git@github.com:.insteadOf)
-    if ! [ "$current_config" == "$desired_config" ]; then
-        git config --global url.git@github.com:.insteadOf "https://github.com/"
-        echo "Git configuration set to the desired value."
-    fi
-    export GOPRIVATE="github.com"
-    /usr/local/go/bin/go install github.com/onlicorp/dev-tools/creds@latest
-fi
-
 echo Stopping docker containers
 docker stop $(docker ps -q)
 docker rm $(docker ps -aq)
@@ -61,31 +48,29 @@ cd
 mkdir -p onlicorp
 cd $HOME/onlicorp
 
+# add creds_update script 
+echo 'docker run --network=deployment -v ./config.json:/config.json -v ${PWD}/../.onli.env:/root/.onli.env onlicorp/base-image bash -c "creds verify || creds"' | sudo tee /bin/creds_update > /dev/null
+sudo chmod +x /bin/creds_update
+
 # Clone/Update repos
-services=(logistics onli-cloud-tray transfer-agent treasury bill-breaker oracle)
+services=(convey logistics onli-cloud-tray transfer-agent treasury bill-breaker oracle)
 for service in "${services[@]}"; do
     echo Cloning $service
     if [ -d $service ]; then
         cd $service
         git pull
-    else 
+    else
         git clone --quiet --depth 1 git@github.com:onlicorp/$service.git
+        cd $service
     fi
-    cd $service
-    echo 'LocalEnv="true"
-LogisticsClientAddr="logistics-logistics-1:8083"
-TransferAgentAddr="transfer-agent-transfer-agent-1:8085"
-BillBreakerClientAddr="bill-breaker-bill-breaker-1:8084"
-OnliCloudAddr="onli-cloud-tray-onli-cloud-tray-1:8086"
-TreasuryAddr="treasury-treasury-1:8087"
-OracleAddr="genome-oracle:8088"
-
-VaultOracleClientAddr="100.114.48.132:8082"
-SecurityTrayAddr="100.114.48.132:8091"
-UserTrayAddr="100.114.48.132:8092"
-RabbitMQAddr="amqp://guest:guest@100.114.48.132:5672/"' > .env
-
+    if [ "$service" != "convey" ]; then
+        sed -i 's/"app_symbol":.*/"app_symbol": "'$APP_SYMBOL'",/' config.json
+        cp -r ../convey/app-ssl/* cert
+    else 
+        bash generate-app-conf.sh $APP_SYMBOL
+    fi
     cd $HOME/onlicorp
+
 done
 
 # Start byobu session
@@ -93,7 +78,6 @@ byobu new-session -d -s os
 # logistics
 byobu rename-window "logstc"
 byobu send-keys -t os:0 "cd logistics" Enter
-byobu send-keys -t os:0 "sed -i 's/vault_oracle_db/100.114.48.132/' docker-compose-multi-server.yml" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 byobu send-keys -t os:0 "docker logs logistics-logistics-1 -f" Enter
@@ -113,14 +97,12 @@ byobu send-keys -t os:2 "docker logs transfer-agent-transfer-agent-1 -f" Enter
 byobu new-window -t os:3 -n "tr"
 byobu send-keys -t os:3 "cd treasury" Enter
 byobu send-keys -t os:3 "docker compose -f docker-compose-multi-server.yml pull" Enter
-byobu send-keys -t os:3 "sleep 10" Enter # wait for oracle to start
 byobu send-keys -t os:3 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 byobu send-keys -t os:3 "docker logs treasury-treasury-1 -f" Enter
 # bill-breaker
 byobu new-window -t os:4 -n "bb"
 byobu send-keys -t os:4 "cd bill-breaker" Enter
 byobu send-keys -t os:4 "docker compose -f docker-compose-multi-server.yml pull" Enter
-byobu send-keys -t os:4 "sleep 60" Enter # wait for treasury to start
 byobu send-keys -t os:4 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 byobu send-keys -t os:4 "docker logs bill-breaker-bill-breaker-1 -f" Enter
 # genome-oracle
@@ -128,6 +110,12 @@ byobu new-window -t os:5 -n "oracle"
 byobu send-keys -t os:5 "cd oracle" Enter
 byobu send-keys -t os:5 "docker compose pull" Enter
 byobu send-keys -t os:5 "docker compose up -d" Enter
-byobu send-keys -t os:5 "docker logs genome-oracle -f" Enter
+byobu send-keys -t os:5 "docker logs oracle -f" Enter
 
+# convey
+byobu new-window -t os:6 -n "convey"
+byobu send-keys -t os:6 "cd convey" Enter
+byobu send-keys -t os:6 "docker compose -f docker-compose-app.yml pull" Enter
+byobu send-keys -t os:6 "docker compose -f docker-compose-app.yml up -d" Enter
+byobu send-keys -t os:6 "docker logs onli-app-proxy -f" Enter
 byobu attach-session -t os
