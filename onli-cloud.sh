@@ -66,8 +66,6 @@ for service in "${services[@]}"; do
     if [ "$service" != "convey" ]; then
         sed -i 's/"app_symbol":.*/"app_symbol": "'$APP_SYMBOL'",/' config.json
         cp -r ../convey/app-ssl/* cert
-    else 
-        bash generate-app-conf.sh $APP_SYMBOL
     fi
     cd $HOME/onlicorp
 

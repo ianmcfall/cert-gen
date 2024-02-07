@@ -69,10 +69,6 @@ byobu rename-window "user-tray"
 byobu send-keys -t os:0 "cd user-tray" Enter 
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:0 "sleep 10" Enter
-byobu send-keys -t os:0 "creds_update" Enter 
-byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml down" Enter
-byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml up -d" Enter
 byobu send-keys -t os:0 "docker logs user-tray-user-tray-1 -f" Enter
 # appliance-tray
 byobu new-window -t os:1 -n "app-tray"
