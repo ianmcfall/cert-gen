@@ -69,40 +69,36 @@ byobu rename-window "user-tray"
 byobu send-keys -t os:0 "cd user-tray" Enter 
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:0 "docker logs user-tray-user-tray-1 -f" Enter
+byobu send-keys -t os:0 "docker logs user-tray -f" Enter
 # appliance-tray
 byobu new-window -t os:1 -n "app-tray"
 byobu send-keys -t os:1 "cd appliance-tray" Enter
 byobu send-keys -t os:1 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:1 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:1 "sleep 10" Enter
 byobu send-keys -t os:1 "creds_update" Enter 
 byobu send-keys -t os:1 "docker compose -f docker-compose-multi-server.yml down" Enter
 byobu send-keys -t os:1 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:1 "docker logs appliance-tray-appliance-tray-1 -f" Enter
+byobu send-keys -t os:1 "docker logs appliance-tray -f" Enter
 # security-tray
 byobu new-window -t os:2 -n "sec-tray"
 byobu send-keys -t os:2 "cd security-tray" Enter
 byobu send-keys -t os:2 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:2 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:2 "sleep 10" Enter
 byobu send-keys -t os:2 "creds_update" Enter 
 byobu send-keys -t os:2 "docker compose -f docker-compose-multi-server.yml down" Enter
 byobu send-keys -t os:2 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:2 "docker logs security-tray-security-tray-1 -f" Enter
+byobu send-keys -t os:2 "docker logs security-tray -f" Enter
 # proof-engine
 byobu new-window -t os:3 -n "proof"
 byobu send-keys -t os:3 "cd proof-engine" Enter
 byobu send-keys -t os:3 "docker compose -f docker-compose-multi-server.yml pull" Enter
-byobu send-keys -t os:3 "sleep 60" Enter
 byobu send-keys -t os:3 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:3 "docker logs proof-engine-proof-engine-1 -f" Enter
+byobu send-keys -t os:3 "docker logs proof-engine -f" Enter
 # vault-oracle
 byobu new-window -t os:4 -n "voracle"
 byobu send-keys -t os:4 "cd vault-oracle" Enter
 byobu send-keys -t os:4 "docker compose pull" Enter
 byobu send-keys -t os:4 "docker compose up -d" Enter
-byobu send-keys -t os:4 "sleep 10" Enter
 byobu send-keys -t os:4 "creds_update" Enter 
 byobu send-keys -t os:4 "docker compose down" Enter
 byobu send-keys -t os:4 "docker compose up -d" Enter
@@ -117,8 +113,7 @@ byobu send-keys -t os:5 "docker logs onli-proxy -f" Enter
 byobu new-window -t os:6 -n "cvt"
 byobu send-keys -t os:6 "cd cloud-vault-tray" Enter
 byobu send-keys -t os:6 "docker compose -f docker-compose-multi-server.yml pull" Enter
-byobu send-keys -t os:6 "sleep 60" Enter
 byobu send-keys -t os:6 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:6 "docker logs cloud-vault-tray-cloud-vault-tray-1 -f" Enter
+byobu send-keys -t os:6 "docker logs cloud-vault-tray -f" Enter
 
 byobu attach-session -t os

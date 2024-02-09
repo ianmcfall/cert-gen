@@ -78,31 +78,31 @@ byobu rename-window "logstc"
 byobu send-keys -t os:0 "cd logistics" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:0 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:0 "docker logs logistics-logistics-1 -f" Enter
+byobu send-keys -t os:0 "docker logs logistics -f" Enter
 # onli-cloud-tray
 byobu new-window -t os:1 -n "oct"
 byobu send-keys -t os:1 "cd onli-cloud-tray" Enter
 byobu send-keys -t os:1 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:1 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:1 "docker logs onli-cloud-tray-onli-cloud-tray-1 -f" Enter
+byobu send-keys -t os:1 "docker logs onli-cloud-tray -f" Enter
 # transfer-agent
 byobu new-window -t os:2 -n "ta"
 byobu send-keys -t os:2 "cd transfer-agent" Enter
 byobu send-keys -t os:2 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:2 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:2 "docker logs transfer-agent-transfer-agent-1 -f" Enter
+byobu send-keys -t os:2 "docker logs transfer-agent -f" Enter
 # treasury
 byobu new-window -t os:3 -n "tr"
 byobu send-keys -t os:3 "cd treasury" Enter
 byobu send-keys -t os:3 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:3 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:3 "docker logs treasury-treasury-1 -f" Enter
+byobu send-keys -t os:3 "docker logs treasury -f" Enter
 # bill-breaker
 byobu new-window -t os:4 -n "bb"
 byobu send-keys -t os:4 "cd bill-breaker" Enter
 byobu send-keys -t os:4 "docker compose -f docker-compose-multi-server.yml pull" Enter
 byobu send-keys -t os:4 "docker compose -f docker-compose-multi-server.yml up -d" Enter
-byobu send-keys -t os:4 "docker logs bill-breaker-bill-breaker-1 -f" Enter
+byobu send-keys -t os:4 "docker logs bill-breaker -f" Enter
 # genome-oracle
 byobu new-window -t os:5 -n "oracle"
 byobu send-keys -t os:5 "cd oracle" Enter
